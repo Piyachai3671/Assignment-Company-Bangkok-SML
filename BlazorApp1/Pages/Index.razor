@@ -1,0 +1,107 @@
+﻿@using BlazorApp1.Data.Models
+@using BlazorApp1.Data.Services
+@page "/"
+
+<div class="container-fluid">
+	<div class="card" style="margin:0 auto; width:500px;">
+		<div calass="card-body" style="background-color:darkgrey; padding:20px; ">
+			<div class="" style="text-align : center; justify-content:center;">
+				<h1>คำนวณเกรด</h1>
+				<EditForm Model="List">
+					<div class="row">
+						<div class="col">
+							<label>ชิ่อ-สกุล</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<InputText @bind-Value="@ModelName"></InputText>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col">
+							<label>รหัสนึกศึกษา</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<InputText @bind-Value="@ModelCname"></InputText>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col">
+							<label>ระบุคะแนนของคุณ</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<InputNumber @bind-Value="@ModelScore"></InputNumber>
+						</div>
+					</div>
+
+					<button @onclick="OnCalculate" class="btn btn-primary mt-3">คำนวณ</button>
+
+
+				</EditForm>
+
+
+				<h3>ชื่อของคุณ : @ModelName</h3>
+				<h3>รหัสนึกศึกษาของคุณ :@ModelCname</h3>
+				<h3>คะแนนของคุณ @ModelScore</h3>
+				<h3>เกรดของคุณ : @Grade</h3>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+@code {
+	double ModelScore = 0;
+	string Grade = "";
+	string ModelName = "";
+	string ModelCname = "";
+	string ValueScore = "";
+	private List<string> List = new();
+	//private List<Student> ListStudents = new List<Student>();
+
+	//protected override async Task OnInitializedAsync()
+	//{
+	//	ListStudents = await studentService.GetStudentsAsync();
+	//}
+	private void OnCalculate()
+	{
+		string Name = ModelName;
+		string Came = ModelCname;
+		double YourScoure = ModelScore;
+		string Yourgrade = ModelCname;
+
+		if (ModelScore >= 90 && ModelScore <= 100)
+		{
+			Grade = "A";
+		}
+		else if (ModelScore >= 80 && ModelScore <= 89.99)
+		{
+			Grade = "B";
+		}
+		else if (ModelScore >= 70 && ModelScore <= 79.99)
+		{
+			Grade = "C";
+		}
+		else if (ModelScore >= 60 && ModelScore <= 69.99)
+		{
+			Grade = "D";
+		}
+		else if (ModelScore >= 0 && ModelScore <= 59.99)
+		{
+			Grade = "F";
+		}
+		else
+		{
+			Grade = "Invalid score";
+		}
+
+	}
+}

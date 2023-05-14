@@ -1,0 +1,49 @@
+﻿@using BlazorApp1.Data.Models
+@using BlazorApp1.Data.Services
+@inject NotificationService notificationservice
+@inject CustomerService customerService
+@inject NavigationManager NavigationManager
+@page "/rp_orderselect"
+<table class="table table-striped-columns">
+	<thead>
+		<tr>
+			<th>รหัสลูกค้า</th>
+			<th>ชื่อลูกค้า</th>
+			<th>ที่อยู่ลูกค้า</th>
+			<th>รหัสไปรษณีย์</th>
+			<th>เบอร์โทรศัพท์</th>
+			<th>เบอร์แฟกซ์</th>
+			<th>อีเมล</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var customer in ListCustomer)
+		{
+			<tr style="cursor:pointer;">
+
+				<td>CUS--@customer.cust_id</td>
+				<td>@customer.cust_name</td>
+				<td>@customer.cust_address</td>
+				<td>@customer.cust_postcode</td>
+				<td>@customer.cust_phone</td>
+				<td>@customer.cust_fax</td>
+				<td>@customer.cust_email</td>
+
+			</tr>
+		}
+	</tbody>
+</table>
+@code{
+	public List<Customer> ListCustomer = new List<Customer>();
+	
+	protected override async Task OnInitializedAsync()
+	{
+
+		var Customers = await customerService.GetCustomerAsync();
+		foreach (var Customer in Customers)
+		{
+			ListCustomer.Add(new Customer().ToUi(Customer));
+
+		}
+	}
+}

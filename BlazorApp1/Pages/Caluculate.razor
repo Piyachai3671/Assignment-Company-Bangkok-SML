@@ -1,0 +1,225 @@
+﻿@using BlazorApp1.Data.Models
+@using BlazorApp1.Data.Services
+
+@page "/caluculate"
+<div class="container-fluid">
+	<div class="card">
+		<div class="card-body">
+			<EditForm Model="List">
+
+			
+			<div class="row">
+				<div class="col">
+					<label>Number 1 :</label>
+						<InputNumber @bind-Value="InputNum1"></InputNumber>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<label>Number 2 :</label>
+						<InputNumber @bind-Value="InputNum2"></InputNumber>
+				</div>
+			</div>
+			</EditForm>
+			<div class="row">
+				<div class="col">
+					<label>Calculator Menu :</label>
+
+				</div>
+			</div>
+			@*<div class="row">
+			<div class="col">
+			<div class="form-check mb-3 mt-0">
+			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" >
+			<label class="form-check-label" for="flexCheckDefault">
+			เลือก +
+			</label>
+			</div>
+			<div class="form-check mb-3 mt-0">
+			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+			<label class="form-check-label" for="flexCheckDefault">
+			เลือก -
+			</label>
+			</div>
+			<div class="form-check mb-3 mt-0">
+			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+			<label class="form-check-label" for="flexCheckDefault">
+			เลือก *
+			</label>
+			</div>
+			<div class="form-check mb-3 mt-0">
+			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" >
+			<label class="form-check-label" for="flexCheckDefault">
+			เลือก /
+			</label>
+			</div>
+			<div class="form-check mb-3 mt-0">
+			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+			<label class="form-check-label" for="flexCheckDefault">
+			เลือก %
+			</label>
+			</div>
+			</div>
+			</div>*@
+			@if (selectmemu1 == true)
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+					<label class="form-check-label" for="flexRadioDefault1">
+						Select +
+					</label>
+				</div>
+			}
+			else
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @onclick="OnCheck1">
+					<label class="form-check-label" for="flexRadioDefault1">
+						Select +
+					</label>
+				</div>
+			}
+			@if (selectmemu2 == true)
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+					<label class="form-check-label" for="flexRadioDefault2">
+						Select -
+					</label>
+				</div>
+			}
+			else
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" @onclick="OnCheck2">
+					<label class="form-check-label" for="flexRadioDefault2">
+						Select -
+					</label>
+				</div>
+			}
+			@if (selectmemu3 == true)
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked>
+					<label class="form-check-label" for="flexRadioDefault3">
+						Select *
+					</label>
+				</div>
+			}
+			else
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" @onclick="OnCheck3">
+					<label class="form-check-label" for="flexRadioDefault3">
+						Select *
+					</label>
+				</div>
+			}
+			@if (selectmemu4 == true)
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" checked>
+					<label class="form-check-label" for="flexRadioDefault4">
+						Select %
+					</label>
+				</div>
+			}
+			else
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" @onclick="OnCheck4">
+					<label class="form-check-label" for="flexRadioDefault4">
+						Select %
+					</label>
+				</div>
+			}
+			<div class="row">
+				<div class="col">
+					<lable>
+						Choose Menu :
+						
+					</lable>
+					@if (selectmemu1 == true)
+					{
+						<input value="+" />
+					}
+					@if (selectmemu2 == true)
+					{
+						<input value="-" />
+					}
+					@if (selectmemu3 == true)
+					{
+						<input value="*" />
+					}
+					@if (selectmemu4 == true)
+					{
+						<input value="%" />
+					}
+					
+				</div>
+			</div>
+			<button @onclick="OnCalculate" class="btn btn-primary">Calculate</button>
+			<span>Result : @SumValue</span>
+		</div>
+	</div>
+</div>
+@code {
+	double InputNum1 = 0;
+	double InputNum2 = 0;
+	double SumValue = 0;
+	private bool selectmemu1 = false;
+	private bool selectmemu2 = false;
+	private bool selectmemu3 = false;
+	private bool selectmemu4 = false;
+	private List<int> List = new();
+
+	
+	private void OnCheck1()
+	{
+		selectmemu1 = !selectmemu1;
+		selectmemu2 = false;
+		selectmemu3 = false;
+		selectmemu4 = false;
+	}
+	private void OnCheck2()
+	{
+		selectmemu1 = false;
+		selectmemu2 = !selectmemu1;
+		selectmemu3 = false;
+		selectmemu4 = false;
+	}
+	private void OnCheck3()
+	{
+		selectmemu1 = false;
+		selectmemu2 = false;
+		selectmemu3 = !selectmemu1;
+		selectmemu4 = false;
+	}
+	private void OnCheck4()
+	{
+		selectmemu1 = false;
+		selectmemu2 = false;
+		selectmemu3 = false;
+		selectmemu4 = !selectmemu1;
+	}
+	private void OnCalculate()
+	{
+		@if (selectmemu1 == true)
+		{
+			SumValue = InputNum1 + InputNum2;
+		}
+		@if (selectmemu2 == true)
+		{
+			SumValue = InputNum1 - InputNum2;
+		}
+		@if (selectmemu3 == true)
+		{
+			SumValue = InputNum1 * InputNum2;
+		}
+		@if (selectmemu4 == true)
+		{
+			SumValue = InputNum1 / InputNum2;
+		}
+	}
+
+}
